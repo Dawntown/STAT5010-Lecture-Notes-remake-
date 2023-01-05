@@ -1,0 +1,196 @@
+\lesson{original Lecture 3}{10 Ways of Viewing a Random Variable}
+\subsection{Familiar Perspectives}
+
+\begin{enumerate}
+    \item probability space
+    \item random variable
+    \item distribution
+    \item $\cdots$
+\end{enumerate}
+
+
+\begin{definition}[Probability space]
+    $(\Omega,\mathcal{F},P)$, 
+    where $\Omega$ is sample space with element $\omega$,
+    $\Omega$ is $\sigma$-algebra/$\sigma$-field, and 
+    $P$ is probability measure.
+\end{definition}
+\info{\scriptsize refer to Measure Theory (Probability and Measures, Billingsley, 1995)}
+
+\subsection{Characteristic Functions (ch.f.)}
+
+\begin{definition}[ch.f.]
+    \begin{gather}
+        \Phi_X(t)=\mathbb{E}(e^{itX})=\int{e^{itx}}dF(x)
+    \end{gather}
+    where $i=\sqrt{-1}$ and $e^{itx}=\cos{tx}+i\sin{tx}$.
+\end{definition}
+
+\begin{example}
+    The characteristic function of $Z\sim{\mathcal{N}(0,1)}$:
+    \begin{gather}
+        \Phi_Z(t)=\exp{\{-\frac{1}{2}t^2\}}
+    \end{gather}
+\end{example}
+
+\begin{align}
+    |\mathbb{E}e^{itX}| 
+    \leq& \mathbb{E}|e^{itX}| \\
+    =& \mathbb{E}|\cos{(tX)}+i\sin{(tX)}| \\
+    =& \mathbb{E}\sqrt{\cos^2(tX)+\sin^2(tX)}=1
+\end{align}
+
+Inversion formula:
+\begin{align}
+    f_X(x)=&\frac{1}{2\pi}\int_{-\infty}^\infty{e^{-itx}\Phi_X(t)}dt \\
+    F_X(x) - F_X(y)=&\frac{1}{s\pi}\int_{-\infty}^\infty\frac{e^{-itx}-e^{-ity}}{it}\Phi_X(t)dt
+\end{align}
+for the continuous points of $F_X(x)$ and $F_X(y)$.
+
+\begin{theorem}
+    \textbf{Uniqueness of ch.f.}\\
+    Let $X$ and $Y$ be random $k$-vectors, then
+    \begin{enumerate}
+        \item If $Phi_X(t)=\Phi_Y(t),~\forall{t}\in\mathbb{R}^k$, then $F_X=F_Y$;
+        \item If $M_X(t)=M_Y(t)<\infty,~\forall{t}~s.t.~|t|<h$, then $F_X=F_Y$
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+$~$\\
+    \begin{enumerate}
+        \item \label{prf:uniqchf1} For any $\boldsymbol{a}=(a_1, \cdots, a_k)^T\in\mathbb{R}^k$, $\boldsymbol{b}\in\mathbb{R}^k$,
+        and $(\boldsymbol{a},\boldsymbol{b}]=(a_1,b_1]\times\cdots\times(a_k,b_k]$
+        satisfying $P_X(\text{the boundary of}~(\boldsymbol{a},\boldsymbol{b}])=0$,
+        \begin{gather}
+            P((\boldsymbol{a},\boldsymbol{b}])
+            =\lim_{c\to\infty}\int_{-c}^c\cdots\int_{-c}^c{
+            \frac{\Phi_X(t_1,\cdots,t_k)}{(-1)^{\frac{k}{2}(2\pi)^k}}
+            }\prod_{j=1}^k\frac{e^{-it_ja_j}-e^{-it_jb_j}}{it_j}dt_j
+        \end{gather}
+        \item \label{prf:uniqchf2} First, consider the case where $k=1$. Since
+        \begin{gather}
+            e^{s|x|}\leq e^{sx}+e^{-sx},
+        \end{gather}
+        we conclude that $|X|$ has an MGF that is finite in the neighborhood $(-c,c)$ for some $c>0$,
+        and that $|X|$ has finite moments of all orders.\\
+        Observe that 
+        \begin{gather}
+            \left| e^{itx}\left[ e^{iax}-\sum_{j=0}^n\frac{(iax)^j}{j!} \right] \right| \leq \frac{|ax|^{n+1}}{(n+1)!},
+        \end{gather}
+        We can write
+        \begin{gather}
+            \left| \Phi_X(t+a)-\sum_{j=0}^n\frac{a^j}{j!}\mathbb{E}[(iX)^je^{itX}] \right| \leq \frac{|a|^{n+1}\mathbb{E}|X|^{n+1}}{(n+1)!}
+        \end{gather}
+        
+        By the fact (\ref{eq:fact2}) below, we have
+        \begin{align}
+            \mathbb{E}(e^{i(t+a)X})
+            =& \mathbb{E}\left( e^{itX}\sum_{j=0}^\infty\frac{a^j}{j!}(iX)^j \right)\\
+            =& \sum_{j=0}^\infty\frac{a^j}{j!}\mathbb{E}\left( e^{itX}(iX)^j \right)\\
+            =& \sum_{j=0}^\infty\frac{a^j}{j!}\Phi^{(j)}_X(t)
+        \end{align}
+        
+        The result/expansion also holds for $Y$. Under the assumption that $M_X=M_Y<\infty$ in a neighbourhood of 0,
+        $X$ and $Y$ have the same moments of all orders. 
+        By the Fact 2., 
+        $\Phi^{(j)}_X(0)=\Phi_Y^{(j)}(0)$ for all $j=1,2,\cdots$, 
+        which and Equation (\ref{eq:fact2}) with $t=0$ imply that $\Phi_X$ and $\Phi_Y$ are the same on the interval $(-c,c)$.
+        
+        Considering $t=c-\epsilon$, and $-c+\varepsilon$ for all arbitrary small $\varepsilon>$ in Equation (\ref{eq:fact2})
+        shows that $\Phi_X$ and $\Phi_Y$ also agree on $(-2c+\varepsilon, 2c-\varepsilon)$ and hence $(-2c,2c)$.
+        Likewise, the same argument $\Phi_X$ and $\Phi_Y$ are the same on $(-3c,3c)$ and so on.
+        Hence, $\Phi_X(t)=\Phi_Y(t)$ for all $t$ and by Proof part (\ref{prf:uniqchf1}) $F_X=F_Y$.
+        
+        For the case $k\geq 2$, if $F_X\neq F_Y$, then by Proof part (\ref{prf:uniqchf1}),
+        there exists $t\in\mathbb{R}^k$ such that $\Phi_X(t)\neq\Phi_Y(t)$, Then $\Phi_{t^TX}(1)\neq\Phi_{t^TY}(1)$,
+        which implies that $F_{t^TX}=F_{t^TY}$.
+        
+        But $M_X=M_Y<\infty$ in a neighbourhood of $\boldsymbol{0}\in\mathbb{R}^k$ implies that $M_{t^TX}=M_{t^TY}<\infty$
+        in a neighbourhood of $0\in\mathbb{R}$ and by the proved result for $k=1$, $M_{t^TX}=M_{t^TY}$. The contradiction show that $F_X=F_Y$.
+    \end{enumerate}
+\end{proof}
+$~$\\
+\textbf{Facts}:
+\begin{enumerate}
+    \item If $M_X(t)$ is finite in a neighbourhood of 0, 
+    then $\mathbb{E}(X_1^{r_1} \cdots X_k^{r_k})$ is finite for any integers $r_1,\cdots,r_k\geq 0$ and 
+    $M_X(t)$ has the power series expansion
+    \begin{gather}
+        M_X(t)=\sum_{(r_1,\cdots,r_k)\in\mathbb{Z}^+\cup{\{0\}}}
+        \frac{\mathbb{E}(X_1^{r_1} \cdots X_k^{r_k})t_1^{r_1} \cdots t_k^{r_k}}{r_1!\cdots r_k!}
+    \end{gather}
+    for any $k$-dimension random vector $X$.
+    \item \begin{gather}
+        \frac{\partial^r\Phi_X(t)}{\partial{t_1^{r_1}}\cdots\partial{t_k^{r_k}}}
+        =(-1)^\frac{r}{2}\mathbb{E}(X_1^{r_1} \cdots X_k^{r_k}e^{it^TX})
+    \end{gather}
+    with 
+    \begin{gather}
+        \left.\frac{\partial^r\Phi_X(t)}{\partial{t_1^{r_1}}\cdots\partial{t_k^{r_k}}}\right|_{t=0}
+        =(-1)^\frac{r}{2}\mathbb{E}(X_1^{r_1} \cdots X_k^{r_k})
+    \end{gather}
+    we can write, for any $t\in\mathbb{R}$, 
+    \begin{gather}
+        \Phi_X(t+a)=\sum_{j=0}^\infty\frac{\Phi_X^{(j)}(t)}{j!}a^j, ~~|a|<c\label{eq:fact2}
+    \end{gather}
+\end{enumerate}
+
+\subsection{Conditional Probability}
+\begin{gather}
+    P(B|A)=\frac{P(A\cup{B})}{P(A)},~\text{when}~P(B)\neq 0
+\end{gather}
+where by convention, $P(B|A)=0$ when $P(A)=0$.
+Suppose $\mathbb{E}|f(X,Y)|<\infty$,
+\begin{gather}
+    \mathbb{E}f(X,Y)=\mathbb{E}[\mathbb{E}f(X,Y)|X]\label{eq:towerexpec}
+\end{gather}\info{\scriptsize Tower expectation: $\mathbb{E}(Y|X)=\beta_0^TX$}
+with 
+\begin{gather}
+    \mathbb{E}[f(X,Y)|X]\triangleq h(X)~\text{and}\\
+    H(x)=\mathbb{E}[f(X,Y)|X=x]=\int{f(x,y)}dQ_x(y)
+\end{gather}
+where $Q_x(y)$ denotes the conditional distribution of $Y$ given $X=x$. 
+Then Equation (\ref{eq:towerexpec}) becomes
+\begin{gather}
+    \mathbb{E}f(X,Y)=\int{H(x)}dP_X(x)=\int\int{f(x,y)}dQ_x(y)dP_X(x)
+\end{gather}
+where $P_X(x)$ is the distribution of $X$.
+
+\begin{definition}[NFFC]
+    The function $Q$ is a conditional distribution of $Y$ given $X$, writte as $Y|X=x\sim Q_x$ if
+    \begin{enumerate}[{(1)}]
+        \item $Q_x(\cdot)$ is a probability measure for all $x$,
+        \item $Q_x(B)$ is a measurable function of $x$ for nay Borel set $B$,
+        \item for any Borel sets $A$ and $B$,
+        \begin{gather}
+            P(X\in A, Y\in B)=\int_A{Q_x(B)}dP_X(x)
+        \end{gather}
+    \end{enumerate}
+\end{definition}
+
+
+\subsection{Tail behaviour}
+For a scalar random variable $X$ with pdf $f$, 
+we say $X$ has
+\begin{enumerate}
+    \item an exponential tail if 
+    \begin{gather}
+        \lim_{a\to\infty}-\frac{\log{(1-F(a))}}{ca^r}=1~~\text{for some}~c>0,r>0
+    \end{gather}
+    \item an algebraic tail if 
+    \begin{gather}
+        \lim_{a\to\infty}-\frac{\log{(1-F(a))}}{m\log{a}}=1~~\text{for some}~m>0.
+    \end{gather}
+\end{enumerate}
+
+\begin{example}
+    $~$
+    \begin{itemize}
+        \item Exponential: $F(a)=1-e^{-\lambda a}$, $c=\lambda,r=1$
+        \item Gaussian: $F(a)=\cdots$, $c=2,r=2$
+        \item Student t: heavy-tail density for small d.f.
+    \end{itemize}
+\end{example}
+\improvement{\scriptsize Not finished but can be ignored}
+
+\newpage

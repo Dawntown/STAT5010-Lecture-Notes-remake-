@@ -1,0 +1,199 @@
+\lesson{original Lecture 1 -- 3}{Overview of Statistical Inference}
+
+Different disciplines require to convert data to 
+inference/conclusion via statistics:
+\begin{itemize}
+    \item genetic, medical, earth sciences
+    \item economics, finance
+    \item networks, images, recordings
+\end{itemize}
+$~$\\
+% \\ \hspace*{\fill} \\
+Questions concerned:
+\begin{itemize}
+    \item capture the uncertainty. {\color{gray}signal+noises}
+    \item methodology
+    \begin{itemize}
+        \item point estimator 
+        {\color{gray}e.g. 
+        $\hat{\beta}=
+        (\boldsymbol{X}^T\boldsymbol{X})^{-1}\boldsymbol{X}^T\boldsymbol{y}$, where $\boldsymbol{y}$ is r.v..
+        }
+        \item testing $\sim$ confidence region
+        {\color{gray} e.g.
+        $H_0:~\theta=\theta_0$ vs $H_1:~\theta=\theta_1$
+        }
+    \end{itemize}
+    \item optimality / optimal inference
+    \begin{itemize}
+        \item finite-sample optimality 
+        {\color{gray}
+        iid obs: $x_1,\cdots,x_n$
+        }
+        \item asymptotic properties 
+        {\color{gray} 
+        $n\to\infty$
+        }
+    \end{itemize}
+\end{itemize}
+
+\subsection{Decision Theory \citep{Wald1939}}
+
+\begin{gather}
+    (X_1,\cdots,X_n)\overset{iid}{\sim}F~(\text{or}~f)
+\end{gather}
+A statistical model is a family of distributions $\mathbb{P}$ indexed by
+a parameter $\theta$. We demote
+\begin{gather}
+    \mathbb{P}=\{p_\theta:~\theta\in\Omega\}
+\end{gather}
+where $\Omega\in\mathbb{R}^k$ is parameter space.
+
+\begin{example}
+    Flipping a coin.\\
+    
+    obs (data): a sequence of coin flips $(X_1,\cdots,X_n)$. 
+    One can write $\mathbb{P}=\{\text{Bernoulli}(\theta): \theta\in[0,1]\triangleq\Omega\}$ and $P_\theta(X_i=1)=\theta$\\
+    
+    data $\boldsymbol{X}$\\
+    $\Rightarrow$ estimator: $\hat{\theta}(\boldsymbol{X})$ for the parameter $h(\theta)$ 
+    {\color{gray} e.g. ($\bar{X}=\frac{1}{n}\sum_{i=1}^nX_i$)}\\
+    $\Rightarrow$ $\hat{\theta}(\boldsymbol{X})$ for estimation and testing.
+\end{example}
+
+\subsubsection{A Decision Procedure}
+\begin{definition}[Estimator]
+    $\delta:\mathcal{X}\to\mathcal{D}$, 
+    a map from sample space $\mathcal{X}$ to decision space $\mathcal{D}$.
+\end{definition}
+
+\begin{example}
+    Take $\mathbb{P}=\{\text{Bernoulli}(\theta)\}$ as shown earlier,
+    \begin{enumerate}
+        \item \textbf{Estimating $\theta$:} 
+        the dicision space is $\mathcal{D}=[0,1]$ and 
+        one possible decision procedure can be 
+        $\delta(\boldsymbol{X})=\bar{X}_n$.
+        \item \textbf{Hypothesis testing:} 
+        Accept/Reject the Null hypothesis $H_0:\theta=\frac{1}{n}$. 
+        Correspondingly, the decision space is $\mathcal{D}=\{\text{Accept, Reject}\}$.
+        One possible procedure is $\delta(\boldsymbol{X})=$
+        \textit{``Reject to if $\bar{X}_n > 0.5$ and accept it otherwise''}.
+        \item A loss function is mapping $L: \Omega\times\mathcal{D} \to \mathbb{R}^+\cup{\{0\}}$.
+        $L(\theta, d)$  represents the penalty for making the decision $d$ 
+        when $\theta$ is in fact the true parameter for the distribution generating the data.
+    \end{enumerate}
+\end{example}
+
+Loss function
+\begin{itemize}
+    \item Ssquared error loss: $L(\theta,d)=(\theta-d)^2$
+    \item Abstract error loss: $L(\theta,d)=|\theta-d|$
+    \item Risk function: 
+    $L(\theta,d)=\int{\omega(\theta)(\theta-d)^2d\Lambda(\theta)}$
+\end{itemize}
+
+Frequentist perspective: $\theta$ is fixed yet unknown;
+Bayesian perspective: $\Theta\sim$ distribution.
+
+\begin{definition}[Risk function]
+    Overall weighted average of $L(\theta,\delta)$
+    \begin{gather}
+        R(\theta, \delta)=\mathbb{E}_\theta L(\theta, \delta(\boldsymbol{X}))
+    \end{gather}
+\end{definition}
+
+\begin{definition}[Admissibility]
+\label{def:admissible}
+    $\delta$ is inadmissible if there exists $\delta'$ such that 
+    \begin{enumerate}[{(1)}]
+        \item $R(\theta, \delta') \leq R(\theta, \delta)~\forall{\theta}\in\Omega$ and 
+        \item $R(\theta', \delta') < R(\theta', \delta)~\text{for some}~\theta'\in\Omega$
+    \end{enumerate}
+    Otherwise, the $\delta$ is admissible.
+\end{definition}
+\info{\scriptsize
+You should be superior to any other applicant in at least one aspect, 
+or you will not be admitted.}
+
+\subsubsection{Types of Model}
+\begin{enumerate}
+    \item Parametric models: Bernoulli($\theta$), $\mathcal{N}(\mu,\sigma^2)$, t($k$), ...
+    \item Non-parametric models: empirical cdf $\hat{F}_n(x)=\frac{1}{n}\sum_{i=1}^n{I(X_i\leq{x})}$
+    \item Semi-parametric models: Cox proportional hazard model
+    % \begin{align}
+    %     \lambda(t|Z(t))&=\lambda_0(t)\exp{(\beta^TZ(t))}
+    %     &=\frac{f(t|Z)}{}
+        
+    % \end{align}
+\end{enumerate}
+
+
+\subsection{Large-Sample Theory}
+\subsubsection{Convergence in probability}
+\begin{definition}[Convergence in probability]
+    A sequence of random variable $Y_n$ (e.g. $\delta_n(\boldsymbol{X})=\frac{1}{n}\sum_{i=1}^n{X_i}$) 
+    converges in probability to a random variable $Y$ as $n\to\infty$,
+    written as $Y_n\overset{p}{\longrightarrow}Y$,
+    if $\forall{\varepsilon}>0$
+    \begin{gather}
+        P(|Y_n-Y|\geq \varepsilon)\overset{n\to\infty}{\longrightarrow}0
+    \end{gather}
+\end{definition}
+
+\begin{example}
+    \textbf{Weak Law of Large Numbers (WLLNs)}\\
+    $X_1,\cdots,X_n\overset{iid}{\sim}(\mu,\sigma^2),~\sigma^2<\infty,\bar{X}_n=\frac{1}{n}\sum_{i=1}^n{X_i}$,
+    $\mathbb{E}(\bar{X}_n-\mu)^2=\mathrm{Var}\bar{X}_n=\frac{\sigma^2}{n} \to 0$ as $n\to\infty$,
+    in which case $\bar{X}_n\overset{p}{\longrightarrow}\mu$ as $n\to\infty$.
+\end{example}
+
+\begin{prop}
+    If $f(\cdot)$ is continuous at $c$, and if $Y_n\overset{p}{\longrightarrow}c$, then $f(Y_n)\overset{p}{\longrightarrow}f(c)$.
+\end{prop}
+\begin{proof}
+    Since $f$ is continuous at $c$, given any $\varepsilon > 0$, 
+    then exists $\delta_\varepsilon > 0$ such that $|f(y)-f(c)|<\varepsilon$ 
+    whenever $|y-c|<\delta_\varepsilon$. 
+    Thus
+    \begin{gather}
+        P(|Y_n-c|<\delta_\varepsilon)\leq P(|f(y_n)-f(c)|<\varepsilon)
+    \end{gather}
+    which implies
+    \begin{gather}
+        P(|f(y_n)-f(c)|\geq\varepsilon) \leq P(|Y_n-c|>\delta_\varepsilon) \to 0
+    \end{gather}
+    as $Y_n\overset{p}{\longleftarrow}$ as $n\to\infty$.
+\end{proof}
+\info{\scriptsize $\delta-\varepsilon$ language}
+
+\subsubsection{Convergence in distribution}
+\begin{definition}[Convergence in distribution]
+    A sequence of r.v.'s $Y_n~(n \geq 1)$ with cdf's $H_n$ converges
+    in distribution (in law) to a random variable $Y$ with cdf $H$ if
+    \begin{gather}
+        H_n(y)\to H(y)
+    \end{gather}
+    as $n\to\infty$ whenever $H$ continuous at $y$. 
+    For notation, we write $Y_n\Rightarrow Y$ or $Y_n\overset{d/l}{\longrightarrow}Y$.
+\end{definition}
+
+\begin{example}
+    Suppose $Y_n=\frac{1}{n}$, a degenerate r.v. and that $Y$ is always 0.
+    Then 
+    \begin{gather}
+        H_n(y)=P(Y_n\leq y)=\mathbb{I}(\frac{1}{n}\leq y).
+    \end{gather}
+    If $y>0$, then $H_n(y)=\mathbb{I}(\frac{1}{n}\leq y)\to 1$ as $n\to\infty$
+    for eventually $\frac{1}{n}$ will be less than $y$.
+    If $y\leq 0$, then $H_n(y)=\mathbb{I}(\frac{1}{n}\leq y)=0$ for all $n$ and 
+    so $H_n(y)\to 0$ as $n\to\infty$.
+    \newline
+    Note that $H(y)=P(Y\leq y)=\mathbb{I}(0\leq y)$. Comparisons with
+    the limits just obtained show that $H_n(y)\to H(y)$ if $y \neq 0$, 
+    but $H_n(0) = 0 \to 0 \neq 1 = H(0)$. 
+    So, in this example, $Y_n\overset{d}{\longrightarrow}Y$
+    but the cumulative distribution function do not converge to $H(y)$ as $y=0$.
+\end{example}
+
+\newpage

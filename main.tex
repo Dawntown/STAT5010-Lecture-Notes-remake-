@@ -1,0 +1,52 @@
+% Finished mode.
+% \documentclass[nocolor]{article}
+% \documentclass{article}
+
+% Draft mode.
+% \documentclass[working,nocolor]{article}
+\documentclass[working]{article}
+
+\input{preamble.tex}
+
+% \usepackage{lipsum} % For random text. You don't need this.
+\usepackage{enumerate}
+\usepackage{natbib}
+\bibliographystyle{abbrvnat}
+\setcitestyle{authoryear, open={(},close={)}}
+\usepackage{booktabs}
+\usepackage{multirow}
+
+\title{STAT5010 Lecture Notes (Remake)}
+\author{Xiaocheng Zhou}
+\date{\today}
+
+\newcommand{\linktootherpages}{link}
+\newcommand{\shortlinkname}{link}
+\newcommand{\term}{Fall Term}
+\newcommand{\academicyear}{$2022$}
+\newcommand{\faculty}{Department of Statistics}
+
+\begin{document}
+  \createintro
+
+  % start lectures
+  % \input{lectures/lec-01.tex}
+  % \input{lectures/lec-02.tex}
+  % \input{lectures/lec-03.tex}
+  % end lectures
+  \input{lectures/chapter1.tex}
+  \input{lectures/chapter2.tex}
+  \input{lectures/chapter3.tex}
+  \input{lectures/chapter4.tex}
+  \input{lectures/chapter5.tex}
+  % \input{lectures/lec06.tex}
+  % \input{lectures/lec07.tex}
+  % \input{lectures/lec08.tex}
+  % \input{lectures/lec09.tex}
+  % \input{lectures/lec10.tex}
+  % \input{lectures/lec11.tex}
+  % \input{lectures/lec12.tex}
+
+  \listnotes
+  \bibliography{ref}
+\end{document}
