@@ -42,6 +42,21 @@
 \let\iff\Leftrightarrow
 \let\epsilon\varepsilon
 
+
+% KL divergence
+\DeclarePairedDelimiterX{\infdivx}[2]{(}{)}{%
+  #1\;\delimsize\|\;#2%
+}
+\newcommand{\infdiv}{D_{\mathbb{KL}}\infdivx}
+\DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
+
+% argmin max
+\DeclareMathOperator*{\argmax}{\arg\!max}
+\DeclareMathOperator*{\argmin}{\arg\!min}
+\DeclareMathOperator*{\vperp}{\text{\rotatebox{90}{$\models$}}}
+
+
+
 %%%%%%%%%%%%
 %  Tables  %
 %%%%%%%%%%%%

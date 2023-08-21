@@ -1,16 +1,26 @@
 \lesson{original Lecture 3 -- 5}{Data Reduction}
 \subsection{Sufficiency}
 \begin{definition}[statistic]
-    A statistic $T:\mathcal{X}\to T$ is a function of data, e.g.
+    A statistic $T:\mathcal{X}\to \mathcal{T}$ is a function of data
+\end{definition}
+
+\begin{example}[sample mean is a statistic.]
     \begin{gather}
         T(\boldsymbol{X})=\frac{1}{n}\sum_{i=1}^n{X_i}\triangleq\bar{X}_n
     \end{gather}
-\end{definition}
+\end{example}
 
 \begin{definition}[sufficient statistic]
     A statistic is sufficient for a model $\mathcal{P}=\{p_\theta:\theta\in\Omega\}$
-    if for all $t$, the conditional distribution $X|T(X)=t$ does not depend on $\theta$.
+    if for all $t$, the conditional distribution $X|T(X)=t$ does not depend on $\theta$, i.e. 
+    \begin{gather}
+        X|T(X)=t\vperp \theta.
+    \end{gather}
 \end{definition}
+
+\begin{note}
+    The $X$ above should be all samples and cannot be partial.
+\end{note}
 
 \begin{example}
     Let $X_1,\cdots,X_n\overset{iid}{\sim}\text{Bernoulli}(\theta)$.
@@ -32,7 +42,7 @@
         =&P(X_1\leq t,\cdots,X_n\leq t)=[P(X_1\leq t)]^n=\left(\frac{t}{\theta}\right)^n\\
         \Rightarrow
         f_T(t)=&\frac{nt^{n-1}}{\theta^n}~\text{and}~
-        P(\boldsymbol{X}|T))=\cdots\text{\rotatebox{90}{$\models$}}\theta
+        P(\boldsymbol{X}|T))=\cdots\vperp\theta
     \end{align}
 \end{example}
 
@@ -54,7 +64,7 @@
 
 \begin{note}
     Suppose we are given an independent source of randomness, 
-    say $U$\rotatebox{90}{$\models$}$\theta$, we can generate a new dataset $\boldsymbol{X}'$ 
+    say $U\vperp\theta$, we can generate a new dataset $\boldsymbol{X}'$ 
     from the conditional distribution $P(\boldsymbol{X}|T(\boldsymbol{X}))$ and define a randomized procedure:
     \begin{align}
         \delta^*(\boldsymbol{X},U)\triangleq\delta(f(T(\boldsymbol{X})),U)
@@ -68,7 +78,7 @@
         \theta e^{-\theta x} & x\geq 0 \\
         0 & \text{otherwise}
     \end{array}\right.$.
-    Let $U\sim\text{Uniform}(0,1)$ \rotatebox{90}{$\models$}$(X,Y)$. 
+    Let $U\sim\text{Uniform}(0,1)\vperp(X,Y)$. 
     Define $T=X+Y$, $\tilde{X}=UT$ and $\tilde{Y}=(1-U)T$ ($\Rightarrow\tilde{X}+\tilde{Y}=X+Y$).
     \begin{align}
         P(T\leq t|Y\leq y)
@@ -152,7 +162,7 @@ if each $p_\theta$ has the density of the form:
 \end{gather}
 
 \begin{definition}[Exponential family in canonical form]
-    An exponential family is in \textbf{\underline{canonical form}} when density has the form:
+    An exponential family is in \textbf{\uline{canonical form}} when density has the form:
     \begin{gather}
         p(x;\boldsymbol{\eta})=\exp\left\{ \sum_{i=1}^s\eta_iT_i(x)-A(\boldsymbol{\eta}) \right\}h(x)
     \end{gather}
@@ -170,7 +180,7 @@ if each $p_\theta$ has the density of the form:
 \end{definition}
 
 \begin{definition}[Unidentifiable]
-    If $\mathcal{P}=\{p_\theta:\theta\in\Omega\}$, then $\theta$ is \textbf{\underline{unidentifiable}}
+    If $\mathcal{P}=\{p_\theta:\theta\in\Omega\}$, then $\theta$ is \textbf{\uline{unidentifiable}}
     if for two parameters $\theta_1\neq\theta_2$, $f_{\theta_1}=f_{\theta_2}$.
 \end{definition}
 
@@ -203,7 +213,7 @@ if each $p_\theta$ has the density of the form:
 \end{note}
 
 \begin{definition}[Minimal]
-    A canonical exponential family $\mathcal{P}=\{p_\eta:\eta\in\mathcal{H}\}$ is \textbf{\underline{minimal}} if
+    A canonical exponential family $\mathcal{P}=\{p_\eta:\eta\in\mathcal{H}\}$ is \textbf{\uline{minimal}} if
     \begin{enumerate}[{(1)}]
         \item No affine $T_i$'s: 
         $\sum_{i=1}^s\lambda_iT_i(x)=\lambda_0~\forall{x}\in\mathcal{X}\Rightarrow\lambda_i=0~\forall{i}\in\{1,\cdots,s\}$
@@ -213,7 +223,7 @@ if each $p_\theta$ has the density of the form:
 \end{definition}
 
 \begin{definition}[Full-rank and curved]
-    Suppose $\mathcal{P}\{p_\eta:\eta\in\mathcal{H}\}$ is an \underline{s-dimensional minimal exponential family}.
+    Suppose $\mathcal{P}\{p_\eta:\eta\in\mathcal{H}\}$ is an \uline{s-dimensional minimal exponential family}.
     If $\mathcal{H}$ contain open rectangle (s-dimension), then $\mathcal{P}$ is called full-rank, 
     otherwise, $\mathcal{P}$ is curved.
 \end{definition}
@@ -552,7 +562,7 @@ Minimal sufficiency is our achievable notion of optimal data reduction.
 \begin{theorem}
     \textbf{Basu's Theorem}\\
     If $T$ is complete and sufficient for $\mathcal{P}=\{p_\theta:\theta\in\Omega\}$
-    and $V$ is ancillary, then $T(\boldsymbol{X})$ \rotatebox{90}{$\models$} $V(\boldsymbol{X})$.
+    and $V$ is ancillary, then $T(\boldsymbol{X})\vperp V(\boldsymbol{X})$.
 \end{theorem}
 \begin{proof}
     Define $q_A(t)=P_\theta(V\in A|T=t)$ and $p_A=P_\theta(V\in A)$.
@@ -573,12 +583,12 @@ Minimal sufficiency is our achievable notion of optimal data reduction.
     Again by smoothing/tower expectation,
     \begin{align}
         P_\theta(T\in B,V\in A)
-        =& \mathbb{E}_\theta[\mathbf{1}_B(T)\mathbf{1}_A(V)]~~{\color{gray} \mathbf{1}_B(T)=\mathbb{I}(T\in B)}\\
-        =& \mathbb{E}_\theta\{\mathbb{E}_\theta[\mathbf{1}_B(T)\mathbf{1}_A(V)|T]\}\\
-        =& \mathbb{E}_\theta\{\mathbf{1}_B(T)\mathbb{E}_\theta[\mathbf{1}_A(V)|T]\}\\
-        =& \mathbb{E}_\theta[\mathbf{1}_B(T)q_A(T)]\\
-        =& \mathbb{E}_\theta[\mathbf{1}_B(T)p_A]\\
-        =& p_A\mathbb{E}_\theta\mathbf{1}_B(T)\\
+        =& \mathbb{E}_\theta[\bm{1}_B(T)\bm{1}_A(V)]~~{\color{gray} \bm{1}_B(T)=\mathbb{I}(T\in B)}\\
+        =& \mathbb{E}_\theta\{\mathbb{E}_\theta[\bm{1}_B(T)\bm{1}_A(V)|T]\}\\
+        =& \mathbb{E}_\theta\{\bm{1}_B(T)\mathbb{E}_\theta[\bm{1}_A(V)|T]\}\\
+        =& \mathbb{E}_\theta[\bm{1}_B(T)q_A(T)]\\
+        =& \mathbb{E}_\theta[\bm{1}_B(T)p_A]\\
+        =& p_A\mathbb{E}_\theta\bm{1}_B(T)\\
         =& P_\theta(V\in A)P_\theta(T\in B)
     \end{align}
     Hence, $T$ and $V$ are independent as $A$ and $B$ are arbitrary Beorel sets.
@@ -587,7 +597,7 @@ Minimal sufficiency is our achievable notion of optimal data reduction.
 \begin{example}
     Let $X_1,\cdots,X_n\overset{iid}{\sim}\mathcal{N}(\mu,\sigma^2)$, 
     where both $\mu$ and $\sigma^2$ are unknown. 
-    Then $\Bar{X}_n$ \rotatebox{90}{$\models$} $\frac{1}{n}\sum_{i=1}^n(X_i-\Bar{X}_n)^2$.
+    Then $\Bar{X}_n\vperp\frac{1}{n}\sum_{i=1}^n(X_i-\Bar{X}_n)^2$.
     
     For any $\sigma>0$, we consider the submodel $\mathcal{P}_\sigma\{\mathcal{N}(\mu,\sigma^2):\mu\in\mathbb{R}\}$.
     In each submodel, $\Bar{X}_n$ is complete and sufficient, 
@@ -595,10 +605,10 @@ Minimal sufficiency is our achievable notion of optimal data reduction.
     (Let $X_i=Z_i+\mu$, then $X_i-\Bar{X}_n=Z_i-\Bar{Z}_n$, 
     which does not depend on $\mu$.)
 
-    By Basu's theorem, $\Bar{X}_n$ \rotatebox{90}{$\models$} $\sum_{i=1}^n(X_i-\Bar{X}_n)^2$
+    By Basu's theorem, $\Bar{X}_n\vperp\sum_{i=1}^n(X_i-\Bar{X}_n)^2$
     under $\mathcal{N}(\mu,\sigma^2)$ for any $\mu$.
     Since $\sigma$ is arbitrary, we can conclude that 
-    $\Bar{X}_n$ \rotatebox{90}{$\models$} $\frac{1}{n}\sum_{i=1}^n(X_i-\Bar{X}_n)^2$
+    $\Bar{X}_n\vperp\frac{1}{n}\sum_{i=1}^n(X_i-\Bar{X}_n)^2$
     holds for the full model $\mathcal{P}=\{\mathcal{N}(\mu,\sigma^2):\mu\in\mathbb{R},\sigma^2>0\}$.
 \end{example}
 

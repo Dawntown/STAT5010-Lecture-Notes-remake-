@@ -37,7 +37,7 @@ Questions concerned:
     \end{itemize}
 \end{itemize}
 
-\subsection{Decision Theory \citep{Wald1939}}
+\subsection{Decision Theory }%\citep{Wald1939}}
 
 \begin{gather}
     (X_1,\cdots,X_n)\overset{iid}{\sim}F~(\text{or}~f)
@@ -75,7 +75,7 @@ where $\Omega\in\mathbb{R}^k$ is parameter space.
         one possible decision procedure can be 
         $\delta(\boldsymbol{X})=\bar{X}_n$.
         \item \textbf{Hypothesis testing:} 
-        Accept/Reject the Null hypothesis $H_0:\theta=\frac{1}{n}$. 
+        Accept/Reject the Null hypothesis $H_0:\theta=\frac{1}{2}$. 
         Correspondingly, the decision space is $\mathcal{D}=\{\text{Accept, Reject}\}$.
         One possible procedure is $\delta(\boldsymbol{X})=$
         \textit{``Reject to if $\bar{X}_n > 0.5$ and accept it otherwise''}.
@@ -87,7 +87,7 @@ where $\Omega\in\mathbb{R}^k$ is parameter space.
 
 Loss function
 \begin{itemize}
-    \item Ssquared error loss: $L(\theta,d)=(\theta-d)^2$
+    \item Squared error loss: $L(\theta,d)=(\theta-d)^2$
     \item Abstract error loss: $L(\theta,d)=|\theta-d|$
     \item Risk function: 
     $L(\theta,d)=\int{\omega(\theta)(\theta-d)^2d\Lambda(\theta)}$
